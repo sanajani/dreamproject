@@ -20,15 +20,6 @@ const NavElement = ({ isMenuOpen,isLogin,setIsMenuOpen,liStyle }) => {
           <Link
             onClick={() => setIsMenuOpen(!isMenuOpen)}
             
-            to='/about'
-          >
-            About
-          </Link>
-        </li >
-        <li className={liStyle}>
-          <Link
-            onClick={() => setIsMenuOpen(!isMenuOpen)}
-            
             to='/contact'
           >
             Contact

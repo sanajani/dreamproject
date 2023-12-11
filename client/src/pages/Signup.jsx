@@ -1,4 +1,6 @@
-import Image from '../../public/images/hero.svg'
+// import second from 
+import heroImage from '../images/hero.svg';
+
 import { useState,useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom'
 const Signup = () => {
@@ -13,7 +15,7 @@ const Signup = () => {
     <div className='flex justify-center h-[80vh] items-center gap-4'>
         <div className='flex bg-gray-300 p-4 rounded-lg w-[100%] md:w-auto mx-6 md:mx-0'>
         <div className="hidden md:flex w-96  md:flex-col md:justify-between md:items-start">
-            <img className="object-cover w-full mt-10" src={Image} alt="Hello" />
+            <img className="object-cover w-full mt-10" src={heroImage} alt="Hello" />
             <Link className='mt-12 text-gray-900 text-lg underline' to={signin ? '/signin': '/signup'}>{signin ? "have an account signin" : "don't have an accoutn"}</Link>
         </div>
         <form className="bg-gray-100 mx-auto py-6 md:py-0 w-[80%] md:w-96 flex flex-col rounded-md">
