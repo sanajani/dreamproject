@@ -12,6 +12,7 @@ import Home from '../pages/Home'
 import Signup from '../pages/Signup'
 import PageNotFound from '../pages/PageNotFound'
 import Contact from '../pages/Contact' 
+import DashBoard from '../pages/DashBoard'
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -21,6 +22,7 @@ export const router = createBrowserRouter(
             <Route path='signup' element={<Signup />} />
             <Route path='signin' element={<Signup />} />
             <Route path='contact' element={<Contact />}/>
+            <Route path='DashBoard' element={<DashBoard/>}/>
         </Route>
         <Route path='*' element={<PageNotFound />} />         
         </>
