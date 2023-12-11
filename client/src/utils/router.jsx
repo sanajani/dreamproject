@@ -11,7 +11,8 @@ import RootLayout from '../layouts/RootLayout'
 import Home from '../pages/Home'
 import Signup from '../pages/Signup'
 import PageNotFound from '../pages/PageNotFound'
- 
+import Contact from '../pages/Contact' 
+
 export const router = createBrowserRouter(
     createRoutesFromElements(
         <>
@@ -19,6 +20,7 @@ export const router = createBrowserRouter(
             <Route index element={<Home />} />
             <Route path='signup' element={<Signup />} />
             <Route path='signin' element={<Signup />} />
+            <Route path='contact' element={<Contact />}/>
         </Route>
         <Route path='*' element={<PageNotFound />} />         
         </>
