@@ -1,6 +1,5 @@
 import { Link } from "react-router-dom";
 
-
 const NavElement = ({ isMenuOpen,isLogin,setIsMenuOpen,liStyle }) => {
     return (
         <>
@@ -36,12 +35,12 @@ const NavElement = ({ isMenuOpen,isLogin,setIsMenuOpen,liStyle }) => {
           </Link>
         </li>
         {!isLogin ? (
-          <li className="sm:flex sm:gap-3">
+          <div className="sm:flex sm:gap-3">
             <li className={liStyle}>
               <Link
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
                 
-                to='/login'
+                to='/signin'
               >
                 Login
               </Link>
@@ -55,7 +54,7 @@ const NavElement = ({ isMenuOpen,isLogin,setIsMenuOpen,liStyle }) => {
                 Signup
               </Link>
             </li>
-          </li>
+          </div>
         ) : (
           <li >Logout</li>
         )}
