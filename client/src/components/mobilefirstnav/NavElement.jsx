@@ -1,41 +1,45 @@
-import { Link } from 'react-router-dom'
+import { NavLink } from 'react-router-dom'
 
 const NavElement = ({ isMenuOpen, isLogin, setIsMenuOpen, liStyle }) => {
   return (
     <>
       <ul
-        className={`top-[90px] py-6 sm:py-0 sm:mt-2  sm:top-[0px] -left-[0%] sm:flex sm:gap-3 sm:flex-nowrap items-center sm:min-w-fit absolute border-t-2 border-white sm:border-none sm:static  sm:w-72 h-80 sm:h-auto bg-blue-500 w-full sm:overflow-hidden ${
+        className={`top-[90px]
+         py-6 sm:py-0 sm:mt-2 sm:top-[0px]
+         -left-[0%] sm:flex sm:gap-3 sm:flex-nowrap
+         items-center sm:min-w-fit absolute border-t-2
+        border-white sm:border-none sm:static h-96
+        sm:w-72 sm:h-auto bg-blue-500 w-full sm:overflow-hidden ${
           isMenuOpen
             ? 'translate-x-0 sm:translate-x-0'
             : 'translate-x-full sm:translate-x-0'
-        } duration-300 ease-in-out`}
-      >
+        } duration-300 ease-in-out`}>
         <li className={liStyle}>
-          <Link onClick={() => setIsMenuOpen(!isMenuOpen)} to='/'>
+          <NavLink onClick={() => setIsMenuOpen(false)} to='/'>
             Home
-          </Link>
+          </NavLink>
         </li>
         <li className={liStyle}>
-          <Link onClick={() => setIsMenuOpen(!isMenuOpen)} to='/contact'>
+          <NavLink onClick={() => setIsMenuOpen(false)} to='/contact'>
             Contact
-          </Link>
+          </NavLink>
         </li>
         <li className={liStyle}>
-          <Link onClick={() => setIsMenuOpen(!isMenuOpen)} to='/dashboard'>
+          <NavLink onClick={() => setIsMenuOpen(false)} to='/dashboard'>
             DashBoard
-          </Link>
+          </NavLink>
         </li>
         {!isLogin ? (
           <div className='sm:flex sm:gap-3'>
             <li className={liStyle}>
-              <Link onClick={() => setIsMenuOpen(!isMenuOpen)} to='/signin'>
+              <NavLink onClick={() => setIsMenuOpen(false)} to='/signin'>
                 Login
-              </Link>
+              </NavLink>
             </li>
             <li className={liStyle}>
-              <Link onClick={() => setIsMenuOpen(!isMenuOpen)} to='/signup'>
+              <NavLink onClick={() => setIsMenuOpen(false)} to='/signup'>
                 Signup
-              </Link>
+              </NavLink>
             </li>
           </div>
         ) : (

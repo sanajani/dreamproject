@@ -15,6 +15,14 @@ const userSchema = mongoose.Schema({
         required:[true, "Password field is required"],
         unique: [true, "Password field should be unique"]
     },
+    isAdmin:{
+        type: Boolean,
+        default: false
+    },
+    isWorker:{
+        type: Boolean,
+        default: false
+    }
 })
 
 const userModel = mongoose.model("users",userSchema)

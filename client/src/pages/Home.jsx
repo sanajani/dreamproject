@@ -1,9 +1,36 @@
+// import SearchTable from "../components/homepagecomponents/SearchTable"
+// import HomePageTable from "../components/homepagecomponents/HomePageTable"
+
+
+// const Home = () => {
+//   return (
+//     <main className="grid grid-cols-1 md:grid-cols-3 md:px-4 mt-4 bg-gray-100 rounded-lg py-5">
+//       <div>
+//         <SearchTable />
+//       </div>
+//       <div className='md:col-span-2 md:w-full'>
+//         <HomePageTable />
+//       </div>
+//     </main>
+
+//   )
+// }
+
+// export default Home
+
+// import SearchTable from "../components/homepagecomponents/SearchTable"
+import HomePageTable from "../components/homepagecomponents/HomePageTable"
+
+
 const Home = () => {
   return (
-    <div>
-        Lorem ipsum dolor sit, amet consectetur adipisicing elit. Iure harum dolor, reprehenderit consequuntur numquam laborum nobis velit qui aperiam voluptatum. Lorem ipsum dolor sit amet consectetur adipisicing elit. Minus ratione expedita voluptate veritatis tempora, veniam similique fuga amet nostrum fugit modi eum dolorem, eaque cum dignissimos recusandae numquam facilis dolor. Iure libero minus nihil, animi rem tenetur deleniti voluptatibus, eius, id odio sunt asperiores eligendi eos sint optio. Sed odit nihil quo assumenda exercitationem, odio illo quidem iure, ex alias eum et tempora quas nemo ipsam a mollitia id? Repellendus nemo similique maiores corporis accusantium doloribus facere sequi autem consequuntur, aliquid odit ipsum dolores saepe dolorem culpa cupiditate ut nostrum obcaecati? Animi nulla laboriosam saepe rem dolor corrupti ad quis, ab ratione eveniet illum tenetur perspiciatis, praesentium non! Laboriosam quod harum beatae itaque sed et distinctio, repudiandae pariatur voluptatem! Nobis assumenda dolorum provident inventore aspernatur molestias repudiandae voluptate corrupti ipsam tenetur optio deleniti, modi vero soluta dolorem eum. Est suscipit excepturi cumque labore deserunt velit, illum optio quo quaerat ullam aperiam corporis sed repellat cupiditate incidunt aliquam id ad eius ex quasi eum asperiores minima sapiente. Sapiente, corporis consectetur. Nisi illo dolorum deserunt laboriosam iste, quisquam, ut corrupti assumenda at impedit ex repudiandae saepe cumque debitis. Magnam, maiores. Neque ut aliquid, vero dolorum eum, voluptatem error quo commodi perferendis laborum alias similique. Cupiditate sequi minus incidunt reprehenderit deserunt obcaecati consequatur ipsa enim illum, asperiores facilis eligendi eveniet suscipit neque repudiandae, numquam consectetur blanditiis similique cum beatae alias reiciendis possimus, accusantium ipsam! Nostrum harum rem, quos, amet, saepe veniam incidunt ad reiciendis sapiente temporibus praesentium! Praesentium, quod voluptatum! Nulla aut fugiat voluptatem maxime, corrupti veritatis aspernatur blanditiis illum velit iusto aliquid voluptatum culpa eveniet, consequatur vitae iure possimus eius perspiciatis similique suscipit necessitatibus! Quae quibusdam sit voluptatem, eveniet mollitia maxime. Quibusdam voluptas fugit nisi aspernatur, magnam velit explicabo? Ipsa fugit similique ad iure eligendi ea, repellendus ratione omnis vel provident id aliquam libero quasi, non nulla laborum atque, soluta harum! Vero velit similique dolorem a cupiditate placeat quidem amet officia nisi possimus, neque sed commodi ipsam odit mollitia aspernatur numquam magni molestiae quam facere quia reiciendis? Magnam, consequuntur. Id, explicabo et? Dicta cupiditate id incidunt laudantium nemo, et tempora error eligendi distinctio! Saepe distinctio assumenda doloribus sit et ut veniam quam labore minima maxime fuga delectus libero velit perspiciatis voluptatum, rem cum! Pariatur minus quae nihil eum hic nulla neque recusandae veniam magnam doloremque modi sunt iure harum, officia repellat? Reiciendis ipsam incidunt ut, officiis nisi voluptatem officia commodi recusandae placeat.
-    </div>
+    <main className="grid grid-cols-1 md:px-4 mt-4 bg-gray-100 rounded-lg py-5">
+      <div className='md:w-full'>
+        <HomePageTable />
+      </div>
+    </main>
+
   )
 }
 
-export default Home
+export default Home 

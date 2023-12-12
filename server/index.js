@@ -1,7 +1,10 @@
 import express from 'express'
 import DB_CONNECTION from './db/db.connect.js';
+import dotenv from 'dotenv'
+dotenv.config()
 
 import userRouter from './routes/user.router.js'
+import { globalErrorHandler } from './controllers/error.controller.js';
 
 const app = express();
 app.use(express.json())
@@ -15,13 +18,14 @@ app.listen(PORT,() => {
 
 app.use('/api/v1/user',userRouter)
 
+
+// global page not found
+app.all("*",(req,res,next) => {
+  const error = new Error(`Can't find ${req.originalUrl} on the server`);
+  error.status = 'fail'
+  error.statusCode = 404
+  next(error)
+})
+
 // Error handling middleware
-app.use((err, req, res, next) => {
-    // Handle custom errors
-    if (err instanceof BadRequestError || err instanceof NotFoundError) {
-      return res.status(err.statusCode).json({ error: err.message });
-    }
-    // Handle other errors
-    console.error(err);
-    res.status(500).json({ error: 'Internal Server Error' });
-  });
+app.use(globalErrorHandler);
