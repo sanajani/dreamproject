@@ -1,6 +1,7 @@
 import { NavLink } from 'react-router-dom'
 
-const NavElement = ({ isMenuOpen, isLogin, setIsMenuOpen, liStyle }) => {
+const NavElement = ({ isMenuOpen, setIsMenuOpen, liStyle }) => {
+  const isLogin = true
   return (
     <>
       <ul
@@ -43,8 +44,16 @@ const NavElement = ({ isMenuOpen, isLogin, setIsMenuOpen, liStyle }) => {
             </li>
           </div>
         ) : (
-          <li>Logout</li>
-        )}
+          <li className={liStyle}>
+          <NavLink onClick={() => setIsMenuOpen(false)} to='/signup'>
+            Logout
+          </NavLink>
+        </li>        )}
+        <li className={liStyle}>
+          <NavLink onClick={() => setIsMenuOpen(false)} to='/signup'>
+            profile
+          </NavLink>
+        </li>
       </ul>
     </>
   )
