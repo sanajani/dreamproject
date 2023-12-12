@@ -14,6 +14,7 @@ import PageNotFound from '../pages/PageNotFound'
 import Contact from '../pages/Contact' 
 import DashBoard from '../pages/DashBoard'
 
+
 export const router = createBrowserRouter(
     createRoutesFromElements(
         <>
@@ -23,6 +24,7 @@ export const router = createBrowserRouter(
             <Route path='signin' element={<Signup />} />
             <Route path='contact' element={<Contact />}/>
             <Route path='DashBoard' element={<DashBoard/>}/>
+            <Route path='profile' element={<DashBoard/>}/>
         </Route>
         <Route path='*' element={<PageNotFound />} />         
         </>

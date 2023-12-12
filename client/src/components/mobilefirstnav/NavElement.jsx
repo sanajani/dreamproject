@@ -50,7 +50,7 @@ const NavElement = ({ isMenuOpen, setIsMenuOpen, liStyle }) => {
           </NavLink>
         </li>        )}
         <li className={liStyle}>
-          <NavLink onClick={() => setIsMenuOpen(false)} to='/signup'>
+          <NavLink onClick={() => setIsMenuOpen(false)} to='/profile'>
             profile
           </NavLink>
         </li>
