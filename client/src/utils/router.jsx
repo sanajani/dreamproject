@@ -23,7 +23,8 @@ export const router = createBrowserRouter(
             <Route path='signup' element={<Signup />} />
             <Route path='signin' element={<Signup />} />
             <Route path='contact' element={<Contact />}/>
-            <Route path='DashBoard' element={<DashBoard/>}/>
+            <Route path='dashboard' element={<DashBoard/>}/>
+            <Route path='updateprofile' element={<DashBoard/>}/>
             <Route path='profile' element={<DashBoard/>}/>
         </Route>
         <Route path='*' element={<PageNotFound />} />         
