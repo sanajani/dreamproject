@@ -1,19 +1,22 @@
 import express from 'express'
-import { createWorker, deleteWorkerById, getSignleWorker, updateWorker } from '../controllers/worker.controller.js';
+import { createWorker, deleteWorkerById, getAllWorkers, getSignleWorker, updateWorker } from '../controllers/worker.controller.js';
 const router = express.Router();
 
 
 // /api/v1/worker/worker
-router.post('/worker',createWorker)
+router.post('/',createWorker)
 
 // get single user by id
-router.get('/worker/:id',getSignleWorker)
+router.get('/:id',getSignleWorker)
+
+// get single user by id
+router.get('/',getAllWorkers)
 
 // update single user
-router.put('/worker',updateWorker)
+router.put('/',updateWorker)
 
 // delete single user
-router.delete('/worker/:id',deleteWorkerById)
+router.delete('/:id',deleteWorkerById)
 
 
 
