@@ -39,3 +39,6 @@ const workerSchema = mongoose.Schema({
         type:String,
     }
 })
+
+const workderModel = mongoose.model("worker",workerSchema)
+export default workderModel
