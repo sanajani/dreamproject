@@ -1,4 +1,5 @@
 // react-router package
+
 import {
     createBrowserRouter,
     createRoutesFromElements,
@@ -13,6 +14,7 @@ import Signup from '../pages/Signup'
 import PageNotFound from '../pages/PageNotFound'
 import Contact from '../pages/Contact' 
 import DashBoard from '../pages/DashBoard'
+import Profile from '../pages/Profile'
 
 
 export const router = createBrowserRouter(
@@ -25,7 +27,7 @@ export const router = createBrowserRouter(
             <Route path='contact' element={<Contact />}/>
             <Route path='dashboard' element={<DashBoard/>}/>
             <Route path='updateprofile' element={<DashBoard/>}/>
-            <Route path='profile' element={<DashBoard/>}/>
+            <Route path='profile' element={<Profile/>}/>
         </Route>
         <Route path='*' element={<PageNotFound />} />         
         </>
