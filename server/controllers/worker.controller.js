@@ -80,7 +80,7 @@ export const deleteWorkerById = async (req,res,next) => {
 }
 
 export const getAllWorkers = async (req,res,next) => {
-    const limit = parseInt(req?.query?.limit) || 5;
+    const limit = parseInt(req?.query?.limit) || 10;
     const page = parseInt(req?.query?.page) || 1;
     try {
         const getAllWorkers = await workerModel.find().limit(limit * 1).skip((page - 1) * limit).select('-password').exec();

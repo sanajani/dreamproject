@@ -1,14 +1,45 @@
-import { data } from '../../utils/mock_data'
+// import { data } from '../../utils/mock_data'
 import {flexRender,getCoreRowModel,useReactTable} from '@tanstack/react-table'
 import { columns } from '../../utils/tanstacktable/columnHelper'
+import { api } from '../../utils/api'
+import { useEffect, useState, useCallback } from 'react'
+import { useSearchParams } from 'react-router-dom'
 
 // HomePageTable Component
 const HomePageTable = () => {
-    const table = useReactTable({
-        data,
-        columns,
-        getCoreRowModel: getCoreRowModel()
-    })
+  const [searchParams,setSearchParams] = useSearchParams()
+  const pageParams = searchParams.get("page")
+
+  const [data,setData] = useState([])
+  const [pagination,setPagination] = useState({
+    pageIndex:0,
+    pageSize: 5
+  })
+  const getAllUsersData = useCallback(async () => {
+    try {
+      const response = await api.get(`/api/v1/worker?page=${pageParams}`)
+      setData(response?.data?.data)
+    } catch (error) {
+      console.log(error);
+    }
+
+  },[pageParams])
+
+  const table = useReactTable({
+    data,
+    columns,
+    state:{
+      pagination
+    },
+    pageCount:data?.totalPages,
+    manualPagination:true,
+    onPaginationChange:setPagination,
+    getCoreRowModel: getCoreRowModel(),
+  })
+  useEffect(() => {
+    setSearchParams({page: table.getState().pagination.pageIndex + 1})
+    getAllUsersData();
+  },[pagination,setSearchParams,table,getAllUsersData])
   return (
     <div className='max-w-[1100px] mx-auto'>
       <div className='w-full overflow-auto overflow-x-scroll md:overflow-x-hidden px-4 max-h-fit '>
