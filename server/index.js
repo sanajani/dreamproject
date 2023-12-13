@@ -4,6 +4,7 @@ import dotenv from 'dotenv'
 dotenv.config()
 
 import userRouter from './routes/user.router.js'
+import workerRouter from './routes/worker.router.js'
 import { globalErrorHandler } from './controllers/error.controller.js';
 
 const app = express();
@@ -17,6 +18,7 @@ app.listen(PORT,() => {
 })
 
 app.use('/api/v1/user',userRouter)
+app.use('/api/v1/worker',workerRouter)
 
 
 // global page not found

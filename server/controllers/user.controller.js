@@ -9,6 +9,7 @@ const JWTSECRETKEY = process.env.JWT_SECRETKEY || ''
 
 export const registerUser = async (req,res,next) => {
     const {name,email,password} = req.body;
+    console.log(password);
     try {
         const userExistBefore = await userModel.findOne({email})
         if(userExistBefore) return next(new CustomError("User exist with that email",402))
@@ -30,12 +31,14 @@ export const registerUser = async (req,res,next) => {
 
 export const loginUser = async (req,res,next) => {
     const {email,password} = req.body;
+    console.log(email,password);
     try {
         const isUserExist = await userModel.findOne({email})
         if(!isUserExist) return next(new CustomError("Invalid Email or Password",401))
 
-        const isPasswordCorrect = bcryptjs.compareSync(password,isUserExist.password)
-        if(isPasswordCorrect) return next(new CustomError("Invalid Password or Email" ,403))
+        const isPasswordCorrect = await bcryptjs.compareSync(password,isUserExist.password)
+        console.log(isPasswordCorrect);
+        if(!isPasswordCorrect) return next(new CustomError("Invalid Password or Email" ,403))
 
         const token = jwt.sign({_id: isUserExist._id}, JWTSECRETKEY,{
             expiresIn:'1d'

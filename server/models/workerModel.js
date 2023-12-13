@@ -7,7 +7,7 @@ const workerSchema = mongoose.Schema({
     },
     email:{
         type:String,
-        unique: true
+        required: true
     },
     profileImageURL:{
         type:String
@@ -16,7 +16,7 @@ const workerSchema = mongoose.Schema({
         type:String,
         required: true
     },
-    aboutYou:{
+    aboutuser:{
         type:String,
         required: true
     },
