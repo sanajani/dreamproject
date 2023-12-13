@@ -1,6 +1,7 @@
 import workerModel from '../models/workerModel.js'
 import userModel from '../models/userModel.js'
 import CustomError from '../utils/CustomError.js'
+import mongoose from 'mongoose'
 
 export const createWorker = async (req,res,next) => {
     const {name,email,lastName,job,experience,phoneNumber1,phoneNumber2, province,aboutuser,profileImageURL} = req.body;
@@ -52,6 +53,7 @@ export const updateWorker = async (req,res,next) => {
 // get single user from worker database
 export const getSignleWorker = async (req,res,next) => {
    const id = req?.params?.id;
+   if(!mongoose.Types.ObjectId.isValid(id)) return next(new CustomError("Invalid ID:",403))
    try {
     const workerData = await workerModel.findById(id)
     console.log(workerData);
@@ -60,5 +62,20 @@ export const getSignleWorker = async (req,res,next) => {
    } catch (error) {
         next(new CustomError(error.message, error.statusCode))
    }
+}
+
+// delete user by id
+export const deleteWorkerById = async (req,res,next) => {
+    const id = req?.params?.id;
+    if(!mongoose.Types.ObjectId.isValid(id)) return next(new CustomError("Invalid ID is:",403))
+    try {
+        const deleteWorkerWithId = await workerModel.findByIdAndDelete(id)
+        console.log("conosle",deleteWorkerWithId);
+        if(deleteWorkerWithId) return res.status(200).json({message:`account with this ${id} deleted successfully`, success: true})
+        if(!deleteWorkerWithId) return res.status(400).json({message:`such an account did'nt exist`, success: false})
+    } catch (error) {
+        console.log('error is here',error);
+        next(new CustomError(error.message, error.statusCode))
+    }
 }
 
