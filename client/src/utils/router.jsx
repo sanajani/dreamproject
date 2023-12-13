@@ -31,4 +31,5 @@ export const router = createBrowserRouter(
         </>
     )
 )
-// https://github.com/sanajani/dreamproject.git
+// to solve git problem
+// git branch --unset-upstream
