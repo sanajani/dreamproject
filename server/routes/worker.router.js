@@ -1,13 +1,15 @@
 import express from 'express'
-import { createWorker } from '../controllers/worker.controller.js';
+import { createWorker, getSignleWorker, updateWorker } from '../controllers/worker.controller.js';
 const router = express.Router();
 
 
 // /api/v1/worker/worker
 router.post('/worker',createWorker)
+// get single user by id
+router.get('/worker/:id',getSignleWorker)
+// update single user
+router.put('/worker',updateWorker)
 
-// /api/v1/worker/signin
-// router.post('/signin',loginUser)
 
 
 export default router

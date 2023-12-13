@@ -5,18 +5,60 @@ import CustomError from '../utils/CustomError.js'
 export const createWorker = async (req,res,next) => {
     const {name,email,lastName,job,experience,phoneNumber1,phoneNumber2, province,aboutuser,profileImageURL} = req.body;
     if(!name || !email || !job || !phoneNumber1 || !province || !aboutuser) return next(new CustomError("All the fields are required",403))
-    const newWorker = workerModel({
-        name,email,lastName,job,experience,phoneNumber1,phoneNumber2,province,aboutuser,profileImageURL
-    })
     try {
-        const userModeldata = await userModel.findOne({email})
-        if(!userModeldata) return next(new CustomError("UserNot Found",403))
+        const userModeldata = await userModel.findOne({email},'-password')
+        const workerModeldata = await workerModel.findOne({email},'-password')
 
+        if(!userModeldata) return next(new CustomError("UserNot Found",403))
+        if(workerModeldata) return next(new CustomError("Worker have an account"))
+
+        const newWorker = workerModel({
+            name: userModeldata.name,
+            email: userModeldata.email,
+            lastName,job,experience,phoneNumber1,phoneNumber2,province,aboutuser,profileImageURL
+        })
         await newWorker.save();
-        await userModel.findOneAndUpdate({email},{isWorker: true},{new:true})
-        console.log(userModeldata);
+        await userModel.findOneAndUpdate({email},{isWorker: true},{new:true}).select('-password')
         return res.status(200).json({message:"worker created Successfully", success: true, data:newWorker})
     } catch (error) {
         next(new CustomError(error.message, error.statusCode))      
     }
-} 
+}
+
+// update worker data
+export const updateWorker = async (req,res,next) => {
+    const {name,email,lastName,job,experience,phoneNumber1,phoneNumber2, province,aboutuser,profileImageURL} = req.body;
+    const workerModeldata = await workerModel.findOne({email},'-password')
+    if(!workerModeldata) return next(new CustomError("UserNot Found",403))
+    try {
+       const workerUpdated = await workerModel.findOneAndUpdate({email},{
+            name,
+            email,
+            lastName,
+            job,
+            experience,
+            phoneNumber1,
+            phoneNumber2,
+            province,
+            aboutuser,
+            profileImageURL
+        },{new:true})
+        return res.status(200).json({message:"worker update Successfully", success: true, data:workerUpdated})
+    } catch (error) {
+        next(new CustomError(error.message, error.statusCode))
+    }
+}
+
+// get single user from worker database
+export const getSignleWorker = async (req,res,next) => {
+   const id = req?.params?.id;
+   try {
+    const workerData = await workerModel.findById(id)
+    console.log(workerData);
+    if(!workerData) return next(new CustomError("User Not Found",403))
+    return res.status(200).json({message:`there is ${workerData?.name} jan's informtion`, success: true, data:workerData})
+   } catch (error) {
+        next(new CustomError(error.message, error.statusCode))
+   }
+}
+
