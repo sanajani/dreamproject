@@ -18,7 +18,7 @@ const Signup = () => {
             <img className="object-cover w-full mt-10" src={heroImage} alt="Hello" />
             <Link className='mt-12 text-gray-900 text-lg underline' to={signin ? '/signin': '/signup'}>{signin ? "have an account signin" : "don't have an accoutn"}</Link>
         </div>
-        <form className="bg-gray-100 mx-auto py-6 md:py-0 w-[80%] md:w-96 flex flex-col rounded-md">
+        <form className="bg-gray-100 mx-auto py-6 md:py-0 w-full md:w-96 flex flex-col rounded-md">
             <h1 className='text-center my-2 text-xl md:text-3xl font-semibold'>{signin ? "SignUp" : "Login"}</h1>
             {signin?
             <div  className='flex flex-col gap-1 my-2 px-2'>
@@ -37,7 +37,7 @@ const Signup = () => {
             <button className='bg-blue-500 text-base sm:text-xl p-1 md:p-3 rounded-md text-white mx-1 md:mx-3 my-2 md:my-3'>{signin ? "Sign Up": 'Sign In'}</button>
             <button className='bg-red-500 text-base sm:text-xl p-1 md:p-3 rounded-md text-white mx-1 md:mx-3 my-2 md:my-3'>{signin ? "Sign Up with google": "Sign In with google"}</button>
             <button className='bg-blue-700 text-base sm:text-xl p-1 md:p-3 rounded-md text-white mx-1 md:mx-3 my-2 md:my-3'>{signin ? "Sign Up with facebook": "Sign In with facebook"}</button>
-            <Link className='md:hidden mt-2 px-2 text-gray-900 text-lg underline' to={signin ? '/signin': '/signup'}>{signin ? "have an account signin" : "don't have an account"}</Link>
+            <Link className='md:hidden mt-2 px-2 text-gray-900 text-base md:text-xl underline' to={signin ? '/signin': '/signup'}>{signin ? "have an account signin" : "don't have an account"}</Link>
         </form>
         </div>
     </div>

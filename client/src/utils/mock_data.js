@@ -1,16 +1,16 @@
 export const data = [
     {
       "id": 1,
-      "name": " ثناوالله جان مبینی" ,
+      "name": "Sanaullah Jan" ,
       "lastname": "reprehenderit11",
-      "job": "نقاش"
-      ,"location":"هرات"
+      "job": "taylor of the year and months"
+      ,"location":"heratjan"
     },
     {
       "id": 2,
       "name": "میثم",
       "lastname": "maisam1232",
-      "job": "برنامه نویس"
+      "job": "برنامه نویس sdsdsa"
       ,"location":"کابل"
     },
     {

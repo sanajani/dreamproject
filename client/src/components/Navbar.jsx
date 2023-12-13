@@ -8,7 +8,7 @@ const Navbar = () => {
   const [isLogin, setIsLogin] = useState(false)
 
   return (
-    <nav className='bg-blue-500 sm:overflow-hidden z-50 mb-2 py-1 h-[70px] md:px-24 sm:px-8 px-2 flex justify-between items-center fixed top-0 left-0 w-full'>
+    <nav className='bg-blue-500 sm:overflow-hidden z-50 mb-2 py-1 h-[70px] md:px-24 sm:px-8 px-4 flex justify-between items-center fixed top-0 left-0 w-full'>
       <Link
         onClick={() => setIsLogin(!isLogin)}
         to='/'

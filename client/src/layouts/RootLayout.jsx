@@ -3,7 +3,7 @@ import { Outlet } from 'react-router-dom'
 
 const RootLayout = () => {
   return (
-    <div className='min-h-screen pt-[70px] md:px-4'>
+    <div className='min-h-screen pt-[70px]'>
         <header>
             <Navbar />
         </header>
