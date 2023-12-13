@@ -1,5 +1,3 @@
-// import { Link } from 'react-router-dom'
-// import { useState } from 'react'
 import { data } from '../../utils/mock_data'
 import {flexRender,getCoreRowModel,useReactTable} from '@tanstack/react-table'
 import { columns } from '../../utils/tanstacktable/columnHelper'
