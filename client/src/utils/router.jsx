@@ -13,9 +13,10 @@ import Home from '../pages/Home'
 import Signup from '../pages/Signup'
 import PageNotFound from '../pages/PageNotFound'
 import Contact from '../pages/Contact' 
-import DashBoard from '../pages/DashBoard'
+import CreateAnAccount from '../pages/DashBoard'
 import Profile from '../pages/Profile'
-
+import ProtectedRoute from '../components/protectedRoutes/ProtectedRoute'
+import EditProfileProtectRoute from '../components/protectedRoutes/EditProfileProtectRoute'
 
 export const router = createBrowserRouter(
     createRoutesFromElements(
@@ -25,8 +26,8 @@ export const router = createBrowserRouter(
             <Route path='signup' element={<Signup />} />
             <Route path='signin' element={<Signup />} />
             <Route path='contact' element={<Contact />}/>
-            <Route path='dashboard' element={<DashBoard/>}/>
-            <Route path='updateprofile' element={<DashBoard/>}/>
+            <Route path='create-an-account' element={<ProtectedRoute><CreateAnAccount/></ProtectedRoute>}/>
+            <Route path='updateprofile' element={<EditProfileProtectRoute><CreateAnAccount/></EditProfileProtectRoute>}/>
             <Route path='profile' element={<Profile/>}/>
         </Route>
         <Route path='*' element={<PageNotFound />} />         

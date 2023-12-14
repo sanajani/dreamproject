@@ -1,5 +1,10 @@
 import heroImage from '../images/hero.svg';
-import { signupValidationSchema,signinValidationSchema, initialSigninValues,initialSignupValues } from '../utils/validationSchema';
+import {
+    signupValidationSchema,
+    signinValidationSchema,
+    initialSigninValues,
+    initialSignupValues
+} from '../utils/validationSchema';
 import {useFormik} from 'formik'
 import {api} from '../utils/api'
 import {useSelector, useDispatch} from 'react-redux'
@@ -38,7 +43,8 @@ const Signup = () => {
             try {
                 dispatch(showLoading())
                 const response = await api.post(`/api/v1/user/signin`,values)
-                console.log(response);
+                console.log(response?.data?.data);
+                localStorage.setItem('userdataToken',response?.data?.data)
                 dispatch(hideLoading())
                 navigate('/')
             } catch (error) {

@@ -1,7 +1,7 @@
 import { useState,useRef, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 
-const DashBoard = () => {
+const CreateAnAccount = () => {
   const location = useLocation();
   const [profile,setProfile] = useState(false)
 
@@ -13,7 +13,7 @@ const DashBoard = () => {
   const fileRef = useRef(null);
   // INPUT VALUES FOR INPUT TAGS
   const [formData, setFormData] = useState({
-    name: 'sana',
+    name: '',
     lastName: '',
     email:'',
     job: '',
@@ -45,7 +45,6 @@ const DashBoard = () => {
             ref={fileRef}
             style={{ display: 'none' }}
             onChange={handleFileChange}
-            // value={formData.profileImage}
             className="hidden" />
         </div>
         <div className="flex flex-col my-3 mx-1">
@@ -92,4 +91,4 @@ const DashBoard = () => {
   )
 }
 
-export default DashBoard
+export default CreateAnAccount

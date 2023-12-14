@@ -1,7 +1,8 @@
+/* eslint-disable react/prop-types */
 import { NavLink } from 'react-router-dom'
 
-const NavElement = ({ isMenuOpen, setIsMenuOpen, liStyle }) => {
-  const isLogin = false
+const NavElement = ({ isMenuOpen, loginSuccess, setIsMenuOpen, liStyle,workerAccount }) => {
+  // const loginSuccess = false
   return (
     <>
       <ul
@@ -25,12 +26,12 @@ const NavElement = ({ isMenuOpen, setIsMenuOpen, liStyle }) => {
             Contact
           </NavLink>
         </li>
-        {isLogin && <li className={liStyle}>
-          <NavLink onClick={() => setIsMenuOpen(false)} to='/dashboard'>
-            DashBoard
+        {loginSuccess && <li className={liStyle}>
+          <NavLink onClick={() => setIsMenuOpen(false)} to='/create-an-account'>
+            Create An Account
           </NavLink>
         </li>}
-        {!isLogin ? (
+        {!loginSuccess ? (
           <div className='sm:flex sm:gap-3'>
             <li className={liStyle}>
               <NavLink onClick={() => setIsMenuOpen(false)} to='/signin'>
@@ -49,7 +50,7 @@ const NavElement = ({ isMenuOpen, setIsMenuOpen, liStyle }) => {
             Logout
           </NavLink>
         </li> )}
-        {isLogin && <li className={liStyle}>
+        {workerAccount && <li className={liStyle}>
           <NavLink onClick={() => setIsMenuOpen(false)} to='/updateprofile'>
             profile
           </NavLink>
