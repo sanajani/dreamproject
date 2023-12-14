@@ -2,12 +2,17 @@ import heroImage from '../images/hero.svg';
 import { signupValidationSchema,signinValidationSchema, initialSigninValues,initialSignupValues } from '../utils/validationSchema';
 import {useFormik} from 'formik'
 import {api} from '../utils/api'
+import {useSelector, useDispatch} from 'react-redux'
+import { showLoading, hideLoading } from '../redux/features/loadingSlice'
 
 import { useState,useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 
 const Signup = () => {
+
+    const dispatch = useDispatch();
+    const {loading} = useSelector((state) => state.loading)
 
     const location = useLocation();
     const [signup,setSignup] = useState(false);
@@ -20,19 +25,25 @@ const Signup = () => {
     const sendUserData = async (values) => {
         if(signup){
             try {
+                dispatch(showLoading())
                 const response = await api.post(`/api/v1/user/signup`,values)
                 console.log(response);
+                dispatch(hideLoading())
                 navigate('/signin')
             } catch (error) {
                 console.log(error);
+                dispatch(hideLoading())
             }
         }else{
             try {
+                dispatch(showLoading())
                 const response = await api.post(`/api/v1/user/signin`,values)
                 console.log(response);
+                dispatch(hideLoading())
                 navigate('/')
             } catch (error) {
                 console.log(error);
+                dispatch(hideLoading())
             }
         }
     }
@@ -42,6 +53,8 @@ const Signup = () => {
         validationSchema : signup ? signupValidationSchema : signinValidationSchema,
         onSubmit: sendUserData
     })
+
+    if(loading) return <h1>Loading...</h1>
 
   return (
     <div className='flex justify-center h-[80vh] items-center gap-4'>

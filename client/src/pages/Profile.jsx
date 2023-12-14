@@ -3,39 +3,37 @@ import { useCallback, useEffect, useState } from 'react';
 import AboutUser from '../components/AboutUser'
 import mapImage from '../images/map1.jpg'
 import { api } from '../utils/api'
-// import { useEffect, useState,useCallback } from 'react'
 import { useLocation } from 'react-router-dom'
+import {useSelector, useDispatch} from 'react-redux'
+import { showLoading, hideLoading } from '../redux/features/loadingSlice'
+
 
 const Profile = () => {
+    const dispatch = useDispatch();
+    const {loading} = useSelector((state) => state.loading)
+
+
     const location = useLocation();
     const searchParam = new URLSearchParams(location.search)
     const email = searchParam.get('email')
     const [data,setData] = useState(null)
-    const getUserData = useCallback(async () => {
-        const response = await api.get(`/api/v1/worker/${email}`)
-        // const response = await api.get(`/api/v1/worker/one@gmail.com`)
 
-        // http://localhost:9808
-        console.log(response.data?.data);
-        setData(response?.data?.data)
-    }, [email])
+    const getUserData = useCallback(async () => {
+        try {
+            dispatch(showLoading())
+            const response = await api.get(`/api/v1/worker/${email}`)
+            console.log(response.data?.data);
+            setData(response?.data?.data)
+            dispatch(hideLoading())
+        } catch (error) {
+            dispatch(hideLoading())
+        }
+    }, [email,dispatch])
 
     useEffect(() => {
         getUserData()
     }, [getUserData])
 
-    const isLoading = false
-    if(isLoading) return <h1>Loading...</h1>
-    // const experiance = 'sana'
-    // const phoneNumber2 = 'sana'
-    // const phoneNumber1 = 'sana'
-    // const username = 'sana'
-    // const job = 'sana'
-    // const province = 'sana'
-    // const lastName = 'sana'
-    // const name = 'sana'
-    // const id = 'sana'
-    if(!data) return <h1>Loading..</h1>
     const {
         experiance,
         phoneNumber2,
@@ -45,7 +43,7 @@ const Profile = () => {
         lastName,
         name,
     } = data
-    console.log(data);
+    if(loading) return <h1>Loading...</h1>
 
     return (
         <main className='min-h-screen pt-24 w-full md:max-w-[1200px] mx-auto border-2'>

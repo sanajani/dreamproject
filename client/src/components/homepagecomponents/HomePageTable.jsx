@@ -4,9 +4,13 @@ import { columns } from '../../utils/tanstacktable/columnHelper'
 import { api } from '../../utils/api'
 import { useEffect, useState, useCallback } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
+import {useDispatch, useSelector} from 'react-redux'
+import { showLoading, hideLoading } from '../../redux/features/loadingSlice'
 
 // HomePageTable Component
 const HomePageTable = () => {
+  const {loading} = useSelector((state) => state.loading)
+  const dispatch = useDispatch()
   const [searchParams,setSearchParams] = useSearchParams()
   const pageParams = searchParams.get("page")
 
@@ -17,13 +21,16 @@ const HomePageTable = () => {
   })
   const getAllUsersData = useCallback(async () => {
     try {
+      dispatch(showLoading())
       const response = await api.get(`/api/v1/worker?page=${pageParams}`)
+      dispatch(hideLoading())
       setData(response?.data?.data)
     } catch (error) {
       console.log(error);
+      dispatch(hideLoading())
     }
 
-  },[pageParams])
+  },[pageParams,dispatch])
 
   const table = useReactTable({
     data,
@@ -44,7 +51,7 @@ const HomePageTable = () => {
   useEffect(() => {
     getAllUsersData();
   },[getAllUsersData])
-
+  if(loading) return <h1>Loading...</h1>
   return (
     <div className='max-w-[1100px] mx-auto'>
       <div className='w-full overflow-auto overflow-x-scroll md:overflow-x-hidden px-4 max-h-fit '>
