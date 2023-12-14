@@ -7,7 +7,7 @@ const router = express.Router();
 router.post('/',createWorker)
 
 // get single user by id
-router.get('/:id',getSignleWorker)
+router.get('/:email',getSignleWorker)
 
 // get single user by id
 router.get('/',getAllWorkers)

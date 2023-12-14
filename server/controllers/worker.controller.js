@@ -52,10 +52,10 @@ export const updateWorker = async (req,res,next) => {
 
 // get single user from worker database
 export const getSignleWorker = async (req,res,next) => {
-   const id = req?.params?.id;
-   if(!mongoose.Types.ObjectId.isValid(id)) return next(new CustomError("Invalid ID:",403))
+   const email = req?.params?.email;
+//    if(!mongoose.Types.ObjectId.isValid(id)) return next(new CustomError("Invalid ID:",403))
    try {
-    const workerData = await workerModel.findById(id)
+    const workerData = await workerModel.findOne({email})
     console.log(workerData);
     if(!workerData) return next(new CustomError("User Not Found",403))
     return res.status(200).json({message:`there is ${workerData?.name} jan's informtion`, success: true, data:workerData})
@@ -80,7 +80,7 @@ export const deleteWorkerById = async (req,res,next) => {
 }
 
 export const getAllWorkers = async (req,res,next) => {
-    const limit = parseInt(req?.query?.limit) || 10;
+    const limit = parseInt(req?.query?.limit) || 8;
     const page = parseInt(req?.query?.page) || 1;
     try {
         const getAllWorkers = await workerModel.find().limit(limit * 1).skip((page - 1) * limit).select('-password').exec();

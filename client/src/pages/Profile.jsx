@@ -1,10 +1,13 @@
 // import Image from 'next/image'
 import AboutUser from '../components/AboutUser'
 import mapImage from '../images/map1.jpg'
-
-
+// import { api } from '../utils/api'
+// import { useEffect, useState,useCallback } from 'react'
+// import {useSearchParams} from "react-router-dom";
 
 const Profile = () => {
+
+
     const isLoading = false
     if(isLoading) return <h1>Loading...</h1>
     const experiance = 'sana'

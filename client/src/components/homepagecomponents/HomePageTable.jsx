@@ -3,7 +3,7 @@ import {flexRender,getCoreRowModel,useReactTable} from '@tanstack/react-table'
 import { columns } from '../../utils/tanstacktable/columnHelper'
 import { api } from '../../utils/api'
 import { useEffect, useState, useCallback } from 'react'
-import { useSearchParams } from 'react-router-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 
 // HomePageTable Component
 const HomePageTable = () => {
@@ -50,7 +50,7 @@ const HomePageTable = () => {
                    return <tr key={headerGroup?.id} className=''>
                         {
                             headerGroup.headers.map((header) => {
-                               return <td className='font-semibold md:font-bold sm:text-base md:textxl p-4 text-base border-2' key={header?.id}>{flexRender(header.column.columnDef.header, header.getContext())}</td>
+                               return <td className='font-semibold md:font-bold sm:text-lg md:text-2xl p-4 text-base border-2' key={header?.id}>{flexRender(header.column.columnDef.header, header.getContext())}</td>
                             })
                         }
                     </tr>
@@ -62,12 +62,14 @@ const HomePageTable = () => {
                 table.getRowModel().rows.map((row,index) => {
                     return <tr key={row?.id} 
                     className={`
-                    ${index % 2 === 0 ? "bg-blue-800" : "bg-blue-900"} text-white min-w-full my-1 border
+                    ${index % 2 === 0 ? "bg-blue-800" : "bg-blue-900"} text-white min-w-full my-1 border md:text-2xl sm:text-lg text-base
                     `}
                     >
                         {
                             row.getVisibleCells().map(cell => {
-                              return  <td key={cell?.id} className='p-4'>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+                              return  <td key={cell?.id} className='p-4'>
+                                {console.log(cell)}
+                                {cell.column.id === 'email' ? <Link to={`/profile/${cell.getValue(cell.id)}`}>{flexRender(cell.column.columnDef.cell, cell.getContext())} </Link> : flexRender(cell.column.columnDef.cell, cell.getContext())} </td>
                             })
                         }
                     </tr>
