@@ -4,14 +4,8 @@ import AboutUser from '../components/AboutUser'
 import mapImage from '../images/map1.jpg'
 import { api } from '../utils/api'
 import { useLocation } from 'react-router-dom'
-import {useSelector, useDispatch} from 'react-redux'
-import { showLoading, hideLoading } from '../redux/features/loadingSlice'
-
 
 const Profile = () => {
-    const dispatch = useDispatch();
-    const {loading} = useSelector((state) => state.loading)
-
 
     const location = useLocation();
     const searchParam = new URLSearchParams(location.search)
@@ -20,19 +14,19 @@ const Profile = () => {
 
     const getUserData = useCallback(async () => {
         try {
-            dispatch(showLoading())
             const response = await api.get(`/api/v1/worker/${email}`)
             console.log(response.data?.data);
             setData(response?.data?.data)
-            dispatch(hideLoading())
         } catch (error) {
-            dispatch(hideLoading())
+            console.log(error);
         }
-    }, [email,dispatch])
+    }, [email])
 
     useEffect(() => {
         getUserData()
     }, [getUserData])
+
+    if(!data) return <h1>No Data...</h1>
 
     const {
         experiance,
@@ -43,7 +37,6 @@ const Profile = () => {
         lastName,
         name,
     } = data
-    if(loading) return <h1>Loading...</h1>
 
     return (
         <main className='min-h-screen pt-24 w-full md:max-w-[1200px] mx-auto border-2'>

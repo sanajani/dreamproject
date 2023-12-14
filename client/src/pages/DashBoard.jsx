@@ -1,18 +1,42 @@
-import { useState,useRef, useEffect } from "react";
+import { useState,useRef, useEffect, useCallback } from "react";
 import { useLocation } from "react-router-dom";
+import {getStorage, ref, uploadBytesResumable} from 'firebase/storage'
+import { app } from "../utils/firebase/firebase";
 
 const CreateAnAccount = () => {
+  const [image,setImage] = useState(undefined)
+  const [imagePercent,setImagePercent] = useState(0)
+
   const location = useLocation();
   const [profile,setProfile] = useState(false)
 
   useEffect(() => {
-   setProfile(location.pathname === '/profile')
+   setProfile(location.pathname === '/updateprofile')
   },[location.pathname])
+
+  const handlefileUpload = useCallback((image) => {
+    const storage = getStorage(app)
+    const fileName = new Date().getTime() + image?.name;
+    const storageRef = ref(storage, fileName)
+    const uploadTask = uploadBytesResumable(storageRef,image)
+    uploadTask.on('state_changed', (snapshot) => {
+      const progress = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+      setImagePercent(Math.round(progress))
+      console.log('Upload is '+ imagePercent + '% done');
+    })
+  },[imagePercent])
+
+  // useEffect(() => {
+  //     handlefileUpload(image)
+    
+  // }, [handlefileUpload])
+
+
 
   // USEREF HOOK FOR SHOWING HIDDEN INPUT FILE
   const fileRef = useRef(null);
   // INPUT VALUES FOR INPUT TAGS
-  const [formData, setFormData] = useState({
+  const [formData] = useState({
     name: '',
     lastName: '',
     email:'',
@@ -27,9 +51,7 @@ const CreateAnAccount = () => {
 
   // FILE SELECTED HANDLER
   const handleFileChange = (e) => {
-    setFormData((previousValues)=>{
-      previousValues, formData.profileImage = e.target.files[0]
-    })
+    setImage(e.target.files[0])
     console.log('File selected:', formData);
   };
 
