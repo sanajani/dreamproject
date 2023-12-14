@@ -1,21 +1,21 @@
-// import { createSlice } from "@reduxjs/toolkit";
+import { createSlice } from "@reduxjs/toolkit";
 
-// const initialState = {
-//     user:[]
-// }
+const initialState = {
+    user: null
+}
 
-// export const loadingSlice = createSlice({
-//     name:"loading",
-//     initialState,
-//     reducers:{
-//         showLoading: (state) => {
-//             state.loading = true;
-//         },
-//         hideLoading: (state) => {
-//             state.loading = false
-//         }
-//     }
-// })
+export const userDataSlice = createSlice({
+    name:"userData",
+    initialState,
+    reducers:{
+        setUser: (state,action) =>{
+            state.user = action.payload
+        },
+        clearUser:() => {
+            return null
+        }
+    }
+})
 
-// export const {showLoading, hideLoading} = loadingSlice.actions
-// export default loadingSlice.reducer
+export const {setUser, clearUser} = userDataSlice.actions
+export default userDataSlice.reducer

@@ -5,6 +5,7 @@ import {
     initialSigninValues,
     initialSignupValues
 } from '../utils/validationSchema';
+import { setToken } from '../redux/features/tokenSlice';
 import {useFormik} from 'formik'
 import {api} from '../utils/api'
 import {useSelector, useDispatch} from 'react-redux'
@@ -43,8 +44,8 @@ const Signup = () => {
             try {
                 dispatch(showLoading())
                 const response = await api.post(`/api/v1/user/signin`,values)
-                console.log(response?.data?.data);
-                localStorage.setItem('userdataToken',response?.data?.data)
+                const userToken = response?.data?.data
+                dispatch(setToken(userToken))
                 dispatch(hideLoading())
                 navigate('/')
             } catch (error) {

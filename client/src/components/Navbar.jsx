@@ -2,13 +2,14 @@ import { Link } from 'react-router-dom'
 import { AiOutlineMenu, AiOutlineClose } from 'react-icons/ai'
 import { useEffect, useState } from 'react'
 import NavElement from './mobilefirstnav/NavElement'
+import { useSelector } from 'react-redux'
 
 const Navbar = () => {
+  const {user: userDataToken} = useSelector((state) => state.token)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [loginSuccess,setLoginSuccess] = useState(false)
-  const [workerAccount,setWorkerAccount] = useState(false)
-  const userDataToken = localStorage.getItem('userdataToken')
-  console.log(userDataToken);
+  const workerAccount = false
+
   useEffect(() => {
     if(userDataToken){
       setLoginSuccess(true)
