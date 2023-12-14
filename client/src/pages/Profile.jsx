@@ -1,36 +1,51 @@
 // import Image from 'next/image'
+import { useCallback, useEffect, useState } from 'react';
 import AboutUser from '../components/AboutUser'
 import mapImage from '../images/map1.jpg'
-// import { api } from '../utils/api'
+import { api } from '../utils/api'
 // import { useEffect, useState,useCallback } from 'react'
-// import {useSearchParams} from "react-router-dom";
+import { useLocation } from 'react-router-dom'
 
 const Profile = () => {
+    const location = useLocation();
+    const searchParam = new URLSearchParams(location.search)
+    const email = searchParam.get('email')
+    const [data,setData] = useState(null)
+    const getUserData = useCallback(async () => {
+        const response = await api.get(`/api/v1/worker/${email}`)
+        // const response = await api.get(`/api/v1/worker/one@gmail.com`)
 
+        // http://localhost:9808
+        console.log(response.data?.data);
+        setData(response?.data?.data)
+    }, [email])
+
+    useEffect(() => {
+        getUserData()
+    }, [getUserData])
 
     const isLoading = false
     if(isLoading) return <h1>Loading...</h1>
-    const experiance = 'sana'
-    const phoneNumber2 = 'sana'
-    const phoneNumber1 = 'sana'
-    const username = 'sana'
-    const job = 'sana'
-    const province = 'sana'
-    const lastName = 'sana'
-    const name = 'sana'
-    const id = 'sana'
-    // const data = {
-    //     experiance :'sana' ,
-    //     phoneNumber2 :'sana' ,
-    //     phoneNumber1 :'sana' ,
-    //     username :'sana' ,
-    //     job :'sana' ,
-    //     province :'sana' ,
-    //     lastName :'sana' ,
-    //     name :'sana' ,
-    //     id :'sana' ,
-    // }
-
+    // const experiance = 'sana'
+    // const phoneNumber2 = 'sana'
+    // const phoneNumber1 = 'sana'
+    // const username = 'sana'
+    // const job = 'sana'
+    // const province = 'sana'
+    // const lastName = 'sana'
+    // const name = 'sana'
+    // const id = 'sana'
+    if(!data) return <h1>Loading..</h1>
+    const {
+        experiance,
+        phoneNumber2,
+        phoneNumber1,
+        job,
+        province,
+        lastName,
+        name,
+    } = data
+    console.log(data);
 
     return (
         <main className='min-h-screen pt-24 w-full md:max-w-[1200px] mx-auto border-2'>
@@ -45,29 +60,25 @@ const Profile = () => {
                 <div className='overflow-auto rounded-lg shadow md:h-fit md:m-8 my-7 hidden md:block'>
                     <table className=''>
                         <thead className='bg-black text-white text-sm font-persionFont'>
-                            <tr className=''>
+                            <tr className='text-base sm:text-lg md:text-xl font-bold '>
                                 <th className='py-3 px-4 text-center whitespace-nowrap font-thin tracking-wide'>تجربه</th>
                                 <th className='py-3 px-4 text-center whitespace-nowrap font-thin tracking-wide'>2 شماره</th>
                                 <th className='py-3 px-4 text-center whitespace-nowrap font-thin tracking-wide'>1 شماره</th>
-                                <th className='py-3 px-4 text-center whitespace-nowrap font-thin tracking-wide'>نام خاص</th>
                                 <th className='py-3 px-4 text-center whitespace-nowrap font-thin tracking-wide'>وظیفه</th>
                                 <th className='py-3 px-4 text-center whitespace-nowrap font-thin tracking-wide'>موقعیت</th>
                                 <th className='py-3 px-4 text-center whitespace-nowrap font-thin tracking-wide'>تخلص</th>
                                 <th className='py-3 px-4 text-center whitespace-nowrap font-thin tracking-wide'>نام</th>
-                                <th className='py-3 px-4 text-center whitespace-nowrap font-thin tracking-wide'>شماره آیدی</th>
                             </tr>
                         </thead>
                         <tbody className='bg-gray-300 font-persionFont'>
-                            <tr>
+                            <tr className='text-sm sm:text-base md:text-lg font-bold '>
                                 <td className='py-2 px-4 text-center whitespace-nowrap'>{experiance}</td>
                                 <td className='py-2 px-4 text-center whitespace-nowrap'>{phoneNumber2}</td>
                                 <td className='py-2 px-4 text-center whitespace-nowrap'>{phoneNumber1}</td>
-                                <td className='py-2 px-4 text-center whitespace-nowrap'>{username}</td>
                                 <td className='py-2 px-4 text-center whitespace-nowrap'>{job}</td>
                                 <td className='py-2 px-4 text-center whitespace-nowrap'>{province}</td>
                                 <td className='py-2 px-4 text-center whitespace-nowrap'>{lastName}</td>
                                 <td className='py-2 px-4 text-center whitespace-nowrap'>{name}</td>
-                                <td className='py-2 px-4 text-center whitespace-nowrap'>{id}</td>
                             </tr>
                         </tbody>
                     </table>
@@ -78,12 +89,10 @@ const Profile = () => {
                             <div className='text-2xl my-2'>{experiance}</div>
                             <div className='text-xl my-2'>{phoneNumber2}</div>
                             <div className='text-xl my-2'>{phoneNumber1}</div>
-                            <div className='text-xl my-2'>{username}</div>
                             <div className='text-2xl my-2'>{job}</div>
                             <div className='text-2xl my-2'>{province}</div>
                             <div className='text-2xl my-2'>{lastName}</div>
                             <div className='text-2xl my-2'>{name}</div>
-                            <div className='text-xl my-2'>{id}</div>
                         </div>
                     </div>
                 </div>

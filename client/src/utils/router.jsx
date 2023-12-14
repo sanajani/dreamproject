@@ -27,7 +27,7 @@ export const router = createBrowserRouter(
             <Route path='contact' element={<Contact />}/>
             <Route path='dashboard' element={<DashBoard/>}/>
             <Route path='updateprofile' element={<DashBoard/>}/>
-            <Route path='profile/:email' element={<Profile/>}/>
+            <Route path='profile' element={<Profile/>}/>
         </Route>
         <Route path='*' element={<PageNotFound />} />         
         </>

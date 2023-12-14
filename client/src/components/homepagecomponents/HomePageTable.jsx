@@ -69,7 +69,7 @@ const HomePageTable = () => {
                             row.getVisibleCells().map(cell => {
                               return  <td key={cell?.id} className='p-4'>
                                 {console.log(cell)}
-                                {cell.column.id === 'email' ? <Link to={`/profile/${cell.getValue(cell.id)}`}>{flexRender(cell.column.columnDef.cell, cell.getContext())} </Link> : flexRender(cell.column.columnDef.cell, cell.getContext())} </td>
+                                {cell.column.id === 'email' ? <Link to={`/profile/?email=${cell.getValue(cell.id)}`}>{flexRender(cell.column.columnDef.cell, cell.getContext())} </Link> : flexRender(cell.column.columnDef.cell, cell.getContext())} </td>
                             })
                         }
                     </tr>
