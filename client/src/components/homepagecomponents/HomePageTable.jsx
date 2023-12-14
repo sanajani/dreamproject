@@ -36,10 +36,15 @@ const HomePageTable = () => {
     onPaginationChange:setPagination,
     getCoreRowModel: getCoreRowModel(),
   })
+
   useEffect(() => {
     setSearchParams({page: table.getState().pagination.pageIndex + 1})
+  },[setSearchParams,table,pagination])
+
+  useEffect(() => {
     getAllUsersData();
-  },[pagination,setSearchParams,table,getAllUsersData])
+  },[getAllUsersData])
+
   return (
     <div className='max-w-[1100px] mx-auto'>
       <div className='w-full overflow-auto overflow-x-scroll md:overflow-x-hidden px-4 max-h-fit '>
