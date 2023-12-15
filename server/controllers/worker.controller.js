@@ -6,17 +6,20 @@ import mongoose from 'mongoose'
 export const createWorker = async (req,res,next) => {
     const {name,email,lastName,job,experience,phoneNumber1,phoneNumber2, province,aboutuser,profileImageURL} = req.body;
     if(!name || !email || !job || !phoneNumber1 || !province || !aboutuser) return next(new CustomError("All the fields are required",403))
+
     try {
         const userModeldata = await userModel.findOne({email},'-password')
-        const workerModeldata = await workerModel.findOne({email},'-password')
+        // const workerModeldata = await workerModel.findOne({email},'-password')
 
         if(!userModeldata) return next(new CustomError("UserNot Found",403))
-        if(workerModeldata) return next(new CustomError("Worker have an account"))
+        // if(workerModeldata) return next(new CustomError("Worker have an account"))
 
         const newWorker = workerModel({
             name: userModeldata.name,
             email: userModeldata.email,
-            lastName,job,experience,phoneNumber1,phoneNumber2,province,aboutuser,profileImageURL
+            lastName,job,experience,
+            phoneNumber1,phoneNumber2
+            ,province,aboutuser,profileImageURL
         })
         await newWorker.save();
         await userModel.findOneAndUpdate({email},{isWorker: true},{new:true}).select('-password')

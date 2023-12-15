@@ -10,7 +10,7 @@ const JWTSECRETKEY = process.env.JWT_SECRETKEY || ''
 export const registerUser = async (req,res,next) => {
     const {firstname,email,password} = req.body;
     console.log(firstname,email,password);
-    if(!firstname || !email || !password) return next(new CustomError("User exist with that email",402))
+    if(!firstname || !email || !password) return next(new CustomError("All the fields are required",402))
     try {
         const userExistBefore = await userModel.findOne({email})
         if(userExistBefore) return next(new CustomError("User exist with that email",403))

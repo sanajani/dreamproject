@@ -4,7 +4,7 @@ import {
     signinValidationSchema,
     initialSigninValues,
     initialSignupValues
-} from '../utils/validationSchema';
+} from '../utils/validationSchemas/validationSchema';
 import { setToken } from '../redux/features/tokenSlice';
 import {useFormik} from 'formik'
 import {api} from '../utils/api'

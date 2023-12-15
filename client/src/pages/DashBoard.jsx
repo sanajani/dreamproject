@@ -8,24 +8,14 @@ import {
   uploadBytesResumable,
   getDownloadURL
 } from 'firebase/storage'
+import { initialWorkerAccountValues,createWorkerSchema } from '../utils/validationSchemas/validationSchemaForWorkerForm'
+
+import { useFormik } from 'formik'
+
 import { v4 as uuidv4 } from 'uuid'
-
-
-
+import {api} from '../utils/api'
 
 const CreateAnAccount = () => {
-  // const [formData,setFormData] = useState({
-  //   name: '',
-  //   lastName: '',
-  //   email:'',
-  //   job: '',
-  //   experience: '',
-  //   phoneNumber1: '',
-  //   phoneNumber2: '',
-  //   profileImage: '',
-  //   province: '',
-  //   personalInfo: '',
-  // });
 
   const [image, setImage] = useState(null)
   const [imageUrl, setImageUrl] = useState(null)
@@ -67,6 +57,18 @@ const CreateAnAccount = () => {
     setProfile(location.pathname === '/updateprofile')
   }, [location.pathname])
 
+  // const updateWorkerData = () => {}
+  const createWorkerAccount = (values) => {
+    alert("Hello world")
+    console.log(values);
+  }
+
+  const formik = useFormik({
+    initialValues : initialWorkerAccountValues,
+    validationSchema : createWorkerSchema,
+    onSubmit: createWorkerAccount
+})
+
   useEffect(() => {
     uploadFiles(image, app,setProgressBar,setImage,setImageUrl)
   }, [image])
@@ -77,7 +79,7 @@ const CreateAnAccount = () => {
   return (
     <div className=' min-h-[90vh] bg-gray-300'>
       <div className='max-w-[1140px] mx-auto py-5'>
-        <form className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 bg-white rounded-md pt-3 pb-10'>
+        <form className='grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 bg-white rounded-md pt-3 pb-10' onSubmit={formik.handleSubmit}>
           <h1 className='sm:col-span-2 text-center text-3xl py-4'>
             {!profile
               ? 'Hello dear Sana please fill the form'
@@ -90,7 +92,7 @@ const CreateAnAccount = () => {
               src={defaultProfileImage}
               alt='your Profile'
             />
-            {progressbar && <span>{progressbar}</span>}
+            {/* {progressbar && <span>{progressbar}</span>} */}
 
             <input
               type='file'
@@ -105,10 +107,18 @@ const CreateAnAccount = () => {
               Name:
             </label>
             <input
-              type='text'
+            name='name'
+            onChange={formik.handleChange}
+            onBlur={formik.handleBlur}
+            value={formik.values.name}
+            type='text'
               className='outline-none border-2 p-1 text-sm sm:text-base md:text-lg border-gray-300'
               placeholder='Enter your Name...'
             />
+            {/* error span */}
+            {formik.touched.name && formik.errors.name ? (
+            <span className='text-sm text-red-500'>{formik.errors.name}</span>
+            ) : null}
           </div>
           <div className='flex flex-col my-3 mx-1'>
             <label
@@ -118,20 +128,36 @@ const CreateAnAccount = () => {
               LastName:
             </label>
             <input
+              name='lastName'
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.lastName}
               type='text'
               className='outline-none border-2 p-1 text-sm sm:text-base md:text-lg border-gray-300'
               placeholder='Enter your LastName...'
             />
+            {/* error span */}
+            {formik.touched.lastName && formik.errors.lastName ? (
+            <span className='text-sm text-red-500'>{formik.errors.lastName}</span>
+            ) : null}
           </div>
           <div className='flex flex-col my-3 mx-1'>
             <label className='text-base sm:text-lg md:text-xl' htmlFor='Email'>
               Email:
             </label>
             <input
+              name='email'
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.email}
               type='email'
               className='outline-none border-2 p-1 text-sm sm:text-base md:text-lg border-gray-300'
               placeholder='Enter your Email...'
             />
+            {/* error span */}
+            {formik.touched.email && formik.errors.email ? (
+            <span className='text-sm text-red-500'>{formik.errors.email}</span>
+            ) : null}
           </div>
           <div className='flex flex-col my-3 mx-1'>
             <label className='text-base sm:text-lg md:text-xl' htmlFor='job'>
@@ -141,7 +167,15 @@ const CreateAnAccount = () => {
               type='text'
               className='outline-none border-2 p-1 text-sm sm:text-base md:text-lg border-gray-300'
               placeholder='Enter your Job...'
+              name='job'
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.job}
             />
+            {/* error span */}
+            {formik.touched.job && formik.errors.job ? (
+            <span className='text-sm text-red-500'>{formik.errors.job}</span>
+            ) : null}
           </div>
           <div className='flex flex-col my-3 mx-1'>
             <label
@@ -154,7 +188,14 @@ const CreateAnAccount = () => {
               type='text'
               className='outline-none border-2 p-1 text-sm sm:text-base md:text-lg border-gray-300'
               placeholder='Enter your experience...'
+              name='experience'
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.experience}
             />
+            {formik.touched.experience && formik.errors.experience ? (
+            <span className='text-sm text-red-500'>{formik.errors.experience}</span>
+            ) : null}
           </div>
           <div className='flex flex-col my-3 mx-1'>
             <label
@@ -164,10 +205,17 @@ const CreateAnAccount = () => {
               PhoneNumber1:
             </label>
             <input
+              name='phoneNumber1'
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.phoneNumber1}
               type='text'
               className='outline-none border-2 p-1 text-sm sm:text-base md:text-lg border-gray-300'
               placeholder='Enter your PhoneNumber1...'
             />
+            {formik.touched.phoneNumber1 && formik.errors.phoneNumber1 ? (
+            <span className='text-sm text-red-500'>{formik.errors.phoneNumber1}</span>
+            ) : null}
           </div>
           <div className='flex flex-col my-3 mx-1'>
             <label
@@ -177,10 +225,17 @@ const CreateAnAccount = () => {
               PhoneNumber2:
             </label>
             <input
+              name='phoneNumber2'
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.phoneNumber2}
               type='text'
               className='outline-none border-2 p-1 text-sm sm:text-base md:text-lg border-gray-300'
               placeholder='Enter your PhoneNumber2...'
             />
+            {formik.touched.phoneNumber2 && formik.errors.phoneNumber2 ? (
+            <span className='text-sm text-red-500'>{formik.errors.phoneNumber2}</span>
+            ) : null}
           </div>
 
           <div className='flex flex-col my-3 mx-1'>
@@ -191,10 +246,17 @@ const CreateAnAccount = () => {
               Province:
             </label>
             <input
+              name='province'
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.province}
               type='text'
               className='outline-none border-2 p-1 text-sm sm:text-base md:text-lg border-gray-300'
               placeholder='Enter your Province...'
             />
+              {formik.touched.province && formik.errors.province ? (
+            <span className='text-sm text-red-500'>{formik.errors.province}</span>
+            ) : null}
           </div>
           <div className='md:col-span-3 sm:col-span-2  flex flex-col md: px-1 py-5'>
             <label
@@ -204,11 +266,18 @@ const CreateAnAccount = () => {
               PersonalInfo:
             </label>
             <textarea
+              name='personalInfo'
+              onChange={formik.handleChange}
+              onBlur={formik.handleBlur}
+              value={formik.values.personalInfo}
               placeholder='Enter your PersonalInfo...'
               className='resize-none rounded-md outline-none border-2 p-1 text-sm sm:text-base md:text-lg border-gray-300'
             />
+            {formik.touched.personalInfo && formik.errors.personalInfo ? (
+            <span className='text-sm text-red-500'>{formik.errors.personalInfo}</span>
+            ) : null}
           </div>
-          <button className='bg-green-500 py-3 text-xl rounded-md w-fit px-10 text-white mx-1 font-bold'>
+          <button className='bg-green-500 py-3 text-xl rounded-md w-fit px-10 text-white mx-1 font-bold' type='submit'>
             {!profile ? 'Create an account ' : 'Update your account'}
           </button>
         </form>
