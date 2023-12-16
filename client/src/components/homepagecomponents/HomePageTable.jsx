@@ -56,7 +56,7 @@ const HomePageTable = () => {
     <div className='max-w-[1100px] mx-auto'>
       <div className='w-full overflow-auto overflow-x-scroll md:overflow-x-hidden px-4 max-h-fit '>
         <table className='min-w-[700px] md:w-full text-white bg-blue-500 p-6'>
-          <thead className="">
+          <thead className="text-right">
             {
                 table.getHeaderGroups().map(headerGroup => {
                    return <tr key={headerGroup?.id} className=''>
@@ -69,7 +69,7 @@ const HomePageTable = () => {
                 })
             }
           </thead>
-          <tbody>
+          <tbody className='text-right'>
             {
                 table.getRowModel().rows.map((row,index) => {
                     return <tr key={row?.id} 

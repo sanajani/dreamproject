@@ -2,27 +2,43 @@ import { useState, useRef, useEffect } from 'react'
 import { useLocation } from 'react-router-dom'
 import defaultProfileImage from '../images/profiledefalt.png'
 import { app } from '../utils/firebase/firebase'
+import { useSelector, useDispatch } from 'react-redux'
+import { setWorker } from '../redux/features/workerdataSlice'
+
 import {
   getStorage,
   ref,
   uploadBytesResumable,
   getDownloadURL
 } from 'firebase/storage'
+import {useWorkerUpdateValues} from '../hooks/updateWorkerData'
+
 import { initialWorkerAccountValues,createWorkerSchema } from '../utils/validationSchemas/validationSchemaForWorkerForm'
-
 import { useFormik } from 'formik'
-
 import { v4 as uuidv4 } from 'uuid'
 import {api} from '../utils/api'
 
 const CreateAnAccount = () => {
 
+
+  const {worker} = useSelector((state) => state.worker)
+  console.log(worker);
+  const dispatch = useDispatch();
+  // const workerUpdateHook = useWorkerUpdateValues(worker)
+
   const [image, setImage] = useState(null)
-  const [imageUrl, setImageUrl] = useState(null)
-  const [progressbar, setProgressBar] = useState(0)
+  const [imageUrl, setImageUrl] = useState('')
+  const [progressbar, setProgressBar] = useState(null)
+  const [imageError, setImageError] = useState(false)
 
   const location = useLocation()
   const [profile, setProfile] = useState(false)
+
+
+  const workerUpdateHook = useWorkerUpdateValues(worker)
+
+
+
 
   // firebase functionality
   const uploadFiles = (file, app) => {
@@ -41,37 +57,46 @@ const CreateAnAccount = () => {
       },
       error => {
         console.log(error)
+        setImageError(true)
       },
       () => {
         getDownloadURL(uploadTask.snapshot.ref).then(downloadURL => {
           console.log('File available at', downloadURL)
           setImageUrl(downloadURL)
+          setProgressBar(null)
         })
       }
     )
   }
 
-
-
   useEffect(() => {
     setProfile(location.pathname === '/updateprofile')
   }, [location.pathname])
 
-  // const updateWorkerData = () => {}
-  const createWorkerAccount = (values) => {
-    alert("Hello world")
-    console.log(values);
+  const createWorkerAccount = async (values) => {
+    values.profileImage = imageUrl
+    try {
+      const response = await api.post(`/api/v1/worker`,values)
+      const data = response?.data?.data
+      dispatch(setWorker(data))
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   const formik = useFormik({
-    initialValues : initialWorkerAccountValues,
+    initialValues : !profile ?  initialWorkerAccountValues : workerUpdateHook,
     validationSchema : createWorkerSchema,
     onSubmit: createWorkerAccount
 })
 
   useEffect(() => {
-    uploadFiles(image, app,setProgressBar,setImage,setImageUrl)
+    if(image){
+      uploadFiles(image, app)
+    }
   }, [image])
+  console.log('formik ',formik.initialValues);
+  console.log('formik ',workerUpdateHook);
 
   // USEREF HOOK FOR SHOWING HIDDEN INPUT FILE
   const fileRef = useRef(null)
@@ -85,16 +110,20 @@ const CreateAnAccount = () => {
               ? 'Hello dear Sana please fill the form'
               : 'Update Your Profile'}
           </h1>
-          <div className='flex justify-center sm:col-span-2 md:col-span-1'>
+          <div className='flex justify-center sm:col-span-2 md:col-span-1 flex-col items-center'>
             <img
               onClick={() => fileRef.current.click()}
-              className='w-24 h-24 bg-white rounded-full inline-block cursor-pointer'
-              src={defaultProfileImage}
+              className='w-28 object-cover h-28 bg-white rounded-full inline-block cursor-pointer'
+              src={formik.values.profileImage || imageUrl || defaultProfileImage}
               alt='your Profile'
             />
-            {/* {progressbar && <span>{progressbar}</span>} */}
-
-            <input
+            {
+              imageError && <span>Only images accepted and less then 2mb</span>
+            }
+            {
+              progressbar && <span className='text-sm text-green-500'>{`uploading ${progressbar} %`}</span>
+            }
+          <input
               type='file'
               ref={fileRef}
               style={{ display: 'none' }}
@@ -146,6 +175,7 @@ const CreateAnAccount = () => {
               Email:
             </label>
             <input
+            disabled={profile}
               name='email'
               onChange={formik.handleChange}
               onBlur={formik.handleBlur}

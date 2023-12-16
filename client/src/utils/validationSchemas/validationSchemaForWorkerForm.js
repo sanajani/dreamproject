@@ -1,17 +1,5 @@
 import * as Yup from 'yup'
-  // const [formData,setFormData] = useState({
-  //   name: '',
-  //   lastName: '',
-  //   email:'',
-  //   job: '',
-  //   experience: '',
-  //   phoneNumber1: '',
-  //   phoneNumber2: '',
-  //   profileImage: '',
-  //   province: '',
-  //   personalInfo: '',
-  // });
-
+// import { useSelector } from 'react-redux'
 
 export const createWorkerSchema = Yup.object({
     name: Yup.string().required("Name is required"),
@@ -26,7 +14,7 @@ export const createWorkerSchema = Yup.object({
 })
 
 export const initialWorkerAccountValues = {
-    name: 'sana',
+    name: '',
     lastName: '',
     email:'',
     job: '',
@@ -37,8 +25,3 @@ export const initialWorkerAccountValues = {
     province: '',
     personalInfo: '',
 }
-
-// export const initialSigninValues = {
-//     email: '',
-//     password: ''
-// }

@@ -4,8 +4,20 @@ import CustomError from '../utils/CustomError.js'
 import mongoose from 'mongoose'
 
 export const createWorker = async (req,res,next) => {
-    const {name,email,lastName,job,experience,phoneNumber1,phoneNumber2, province,aboutuser,profileImageURL} = req.body;
-    if(!name || !email || !job || !phoneNumber1 || !province || !aboutuser) return next(new CustomError("All the fields are required",403))
+    console.log(req.body);
+    console.log('helo world');
+      //   name: '',
+  //   lastName: '',
+  //   email:'',
+  //   job: '',
+  //   experience: '',
+  //   phoneNumber1: '',
+  //   phoneNumber2: '',
+  //   profileImage: '',
+  //   province: '',
+  //   : '',personalInfo
+    const {name,email,lastName,job,experience,phoneNumber1,phoneNumber2, province,personalInfo,profileImage} = req.body;
+    if(!name || !email || !job || !phoneNumber1 || !province || !personalInfo) return next(new CustomError("All the fields are required",403))
 
     try {
         const userModeldata = await userModel.findOne({email},'-password')
@@ -19,7 +31,9 @@ export const createWorker = async (req,res,next) => {
             email: userModeldata.email,
             lastName,job,experience,
             phoneNumber1,phoneNumber2
-            ,province,aboutuser,profileImageURL
+            ,province,
+            aboutuser: personalInfo,
+            profileImage
         })
         await newWorker.save();
         await userModel.findOneAndUpdate({email},{isWorker: true},{new:true}).select('-password')
@@ -31,7 +45,7 @@ export const createWorker = async (req,res,next) => {
 
 // update worker data
 export const updateWorker = async (req,res,next) => {
-    const {name,email,lastName,job,experience,phoneNumber1,phoneNumber2, province,aboutuser,profileImageURL} = req.body;
+    const {name,email,lastName,job,experience,phoneNumber1,phoneNumber2, province,personalInfo,profileImage} = req.body;
     const workerModeldata = await workerModel.findOne({email},'-password')
     if(!workerModeldata) return next(new CustomError("UserNot Found",403))
     try {
@@ -44,8 +58,8 @@ export const updateWorker = async (req,res,next) => {
             phoneNumber1,
             phoneNumber2,
             province,
-            aboutuser,
-            profileImageURL
+            aboutuser:personalInfo,
+            profileImage
         },{new:true})
         return res.status(200).json({message:"worker update Successfully", success: true, data:workerUpdated})
     } catch (error) {

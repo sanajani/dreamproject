@@ -1,11 +1,10 @@
 /* eslint-disable react/prop-types */
 import { Navigate } from "react-router-dom"
-
+import { useSelector } from "react-redux";
 const EditProfileProtectRoute = (props) => {
-    const workerAccount = localStorage.getItem('workerAccount')
-    const booleanValue = workerAccount === "true" ? true : false;
-    console.log((booleanValue));
-    if(booleanValue) {
+    const {worker} = useSelector((state) => state.worker)
+
+    if(worker) {
         console.log('hi i am EditProfileProtectRoute');
         return props.children
     }

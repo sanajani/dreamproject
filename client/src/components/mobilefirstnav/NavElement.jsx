@@ -26,7 +26,7 @@ const NavElement = ({ isMenuOpen, loginSuccess, setIsMenuOpen, liStyle,workerAcc
             Contact
           </NavLink>
         </li>
-        {loginSuccess && <li className={liStyle}>
+        {loginSuccess && !workerAccount && <li className={liStyle}>
           <NavLink onClick={() => setIsMenuOpen(false)} to='/create-an-account'>
             Create An Account
           </NavLink>
@@ -52,7 +52,7 @@ const NavElement = ({ isMenuOpen, loginSuccess, setIsMenuOpen, liStyle,workerAcc
         </li> )}
         {workerAccount && <li className={liStyle}>
           <NavLink onClick={() => setIsMenuOpen(false)} to='/updateprofile'>
-            profile
+            updateProfile
           </NavLink>
         </li>}
       </ul>

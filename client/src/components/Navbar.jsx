@@ -8,7 +8,7 @@ const Navbar = () => {
   const {user: userDataToken} = useSelector((state) => state.token)
   const [isMenuOpen, setIsMenuOpen] = useState(false)
   const [loginSuccess,setLoginSuccess] = useState(false)
-  const workerAccount = false
+  const {worker: workerAccount} = useSelector((state) => state.worker)
 
   useEffect(() => {
     if(userDataToken){
