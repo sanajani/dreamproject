@@ -4,36 +4,26 @@ import CustomError from '../utils/CustomError.js'
 import mongoose from 'mongoose'
 
 export const createWorker = async (req,res,next) => {
-    console.log(req.body);
-    console.log('helo world');
-      //   name: '',
-  //   lastName: '',
-  //   email:'',
-  //   job: '',
-  //   experience: '',
-  //   phoneNumber1: '',
-  //   phoneNumber2: '',
-  //   profileImage: '',
-  //   province: '',
-  //   : '',personalInfo
     const {name,email,lastName,job,experience,phoneNumber1,phoneNumber2, province,personalInfo,profileImage} = req.body;
     if(!name || !email || !job || !phoneNumber1 || !province || !personalInfo) return next(new CustomError("All the fields are required",403))
+    console.log(profileImage);
 
     try {
         const userModeldata = await userModel.findOne({email},'-password')
-        // const workerModeldata = await workerModel.findOne({email},'-password')
 
         if(!userModeldata) return next(new CustomError("UserNot Found",403))
-        // if(workerModeldata) return next(new CustomError("Worker have an account"))
 
         const newWorker = workerModel({
             name: userModeldata.name,
             email: userModeldata.email,
-            lastName,job,experience,
-            phoneNumber1,phoneNumber2
-            ,province,
+            lastName,
+            job,
+            experience,
+            phoneNumber1,
+            phoneNumber2,
+            province,
             aboutuser: personalInfo,
-            profileImage
+            profileImageURL:profileImage
         })
         await newWorker.save();
         await userModel.findOneAndUpdate({email},{isWorker: true},{new:true}).select('-password')
@@ -45,7 +35,8 @@ export const createWorker = async (req,res,next) => {
 
 // update worker data
 export const updateWorker = async (req,res,next) => {
-    const {name,email,lastName,job,experience,phoneNumber1,phoneNumber2, province,personalInfo,profileImage} = req.body;
+    const {name,email,lastName,job,experience,phoneNumber1,phoneNumber2, province,personalInfo,profileImageURL} = req.body;
+    console.log(personalInfo);
     const workerModeldata = await workerModel.findOne({email},'-password')
     if(!workerModeldata) return next(new CustomError("UserNot Found",403))
     try {
@@ -59,7 +50,7 @@ export const updateWorker = async (req,res,next) => {
             phoneNumber2,
             province,
             aboutuser:personalInfo,
-            profileImage
+            profileImageURL
         },{new:true})
         return res.status(200).json({message:"worker update Successfully", success: true, data:workerUpdated})
     } catch (error) {

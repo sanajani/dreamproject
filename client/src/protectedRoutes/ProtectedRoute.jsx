@@ -4,10 +4,10 @@ import {Navigate} from 'react-router-dom'
 
 const ProtectedRoute = (props) => {
     const {worker} = useSelector((state) => state.worker)
-    console.log(worker);
-    const userdataToken =  localStorage.getItem('userdataToken')
-    console.log(userdataToken);
-    if(userdataToken && !worker) {
+    const {user} = useSelector((state) => state.token)
+    console.log(worker.length > 0);
+    // console.log(user);
+    if(user && !worker.length > 0) {
         console.log("this is protect ProtectedRoute file")
         return props.children
     }else{

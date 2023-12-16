@@ -21,7 +21,7 @@ export const initialWorkerAccountValues = {
     experience: '',
     phoneNumber1: '',
     phoneNumber2: '',
-    profileImage: '',
+    profileImageURL: '',
     province: '',
     personalInfo: '',
 }

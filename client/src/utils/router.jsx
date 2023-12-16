@@ -14,8 +14,10 @@ import PageNotFound from '../pages/PageNotFound'
 import Contact from '../pages/Contact' 
 import CreateAnAccount from '../pages/DashBoard'
 import Profile from '../pages/Profile'
-import ProtectedRoute from '../components/protectedRoutes/ProtectedRoute'
-import EditProfileProtectRoute from '../components/protectedRoutes/EditProfileProtectRoute'
+// import ProtectedRoute from '../components/protectedRoutes/ProtectedRoute'
+import ProtectedRoute from '../protectedRoutes/ProtectedRoute'
+import EditProfileProtectRoute from '../protectedRoutes/EditProfileProtectRoute'
+
 
 export const router = createBrowserRouter(
     createRoutesFromElements(

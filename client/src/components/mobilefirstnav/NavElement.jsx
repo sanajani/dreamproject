@@ -3,6 +3,8 @@ import { NavLink } from 'react-router-dom'
 
 const NavElement = ({ isMenuOpen, loginSuccess, setIsMenuOpen, liStyle,workerAccount }) => {
   // const loginSuccess = false
+  console.log(workerAccount.length > 0);
+
   return (
     <>
       <ul
@@ -26,7 +28,7 @@ const NavElement = ({ isMenuOpen, loginSuccess, setIsMenuOpen, liStyle,workerAcc
             Contact
           </NavLink>
         </li>
-        {loginSuccess && !workerAccount && <li className={liStyle}>
+        {loginSuccess && !workerAccount.length > 0 && <li className={liStyle}>
           <NavLink onClick={() => setIsMenuOpen(false)} to='/create-an-account'>
             Create An Account
           </NavLink>
@@ -50,7 +52,7 @@ const NavElement = ({ isMenuOpen, loginSuccess, setIsMenuOpen, liStyle,workerAcc
             Logout
           </NavLink>
         </li> )}
-        {workerAccount && <li className={liStyle}>
+        {workerAccount.length > 0 && <li className={liStyle}>
           <NavLink onClick={() => setIsMenuOpen(false)} to='/updateprofile'>
             updateProfile
           </NavLink>
