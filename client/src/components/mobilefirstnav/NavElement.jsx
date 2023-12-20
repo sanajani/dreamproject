@@ -1,7 +1,10 @@
+/* eslint-disable react/prop-types */
 import { NavLink } from 'react-router-dom'
 
-const NavElement = ({ isMenuOpen, setIsMenuOpen, liStyle }) => {
-  const isLogin = true
+const NavElement = ({ isMenuOpen, loginSuccess, setIsMenuOpen, liStyle,workerAccount }) => {
+  // const loginSuccess = false
+  console.log(workerAccount.length > 0);
+
   return (
     <>
       <ul
@@ -25,12 +28,12 @@ const NavElement = ({ isMenuOpen, setIsMenuOpen, liStyle }) => {
             Contact
           </NavLink>
         </li>
-        <li className={liStyle}>
-          <NavLink onClick={() => setIsMenuOpen(false)} to='/dashboard'>
-            DashBoard
+        {loginSuccess && !workerAccount.length > 0 && <li className={liStyle}>
+          <NavLink onClick={() => setIsMenuOpen(false)} to='/create-an-account'>
+            Create An Account
           </NavLink>
-        </li>
-        {!isLogin ? (
+        </li>}
+        {!loginSuccess ? (
           <div className='sm:flex sm:gap-3'>
             <li className={liStyle}>
               <NavLink onClick={() => setIsMenuOpen(false)} to='/signin'>
@@ -45,15 +48,15 @@ const NavElement = ({ isMenuOpen, setIsMenuOpen, liStyle }) => {
           </div>
         ) : (
           <li className={liStyle}>
-          <NavLink onClick={() => setIsMenuOpen(false)} to='/signup'>
+          <NavLink onClick={() => setIsMenuOpen(false)} to='/logout'>
             Logout
           </NavLink>
-        </li>        )}
-        <li className={liStyle}>
+        </li> )}
+        {workerAccount.length > 0 && <li className={liStyle}>
           <NavLink onClick={() => setIsMenuOpen(false)} to='/updateprofile'>
-            profile
+            updateProfile
           </NavLink>
-        </li>
+        </li>}
       </ul>
     </>
   )

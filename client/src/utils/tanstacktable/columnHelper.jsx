@@ -3,16 +3,19 @@ import {createColumnHelper} from '@tanstack/react-table'
 const columnHelper = createColumnHelper();
 
 export const columns = [
-    columnHelper.accessor("name",{
-        header: "Full Name"
-    }),
-    columnHelper.accessor('lastname',{
-        header: "Last Name"
-    }),
-    columnHelper.accessor("location",{
-        header: "Location"
+    columnHelper.accessor("email",{
+        header: "ایمیل آدرس"
     }),
     columnHelper.accessor("job",{
-        header:"job"
-    })
+         header:"وظیفه"
+    }),
+    columnHelper.accessor("province",{
+        header: "ولایت"
+    }),
+    columnHelper.accessor('lastName',{
+        header: "تخلص"
+    }),
+    columnHelper.accessor("name",{
+        header: "نام"
+    }),
 ]

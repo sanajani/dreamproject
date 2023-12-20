@@ -1,13 +1,16 @@
 import express from 'express'
 import DB_CONNECTION from './db/db.connect.js';
 import dotenv from 'dotenv'
+import cors from 'cors'
 dotenv.config()
 
 import userRouter from './routes/user.router.js'
+import workerRouter from './routes/worker.router.js'
 import { globalErrorHandler } from './controllers/error.controller.js';
 
 const app = express();
-app.use(express.json())
+app.use(express.json());
+app.use(cors());
 
 const PORT = process.env.PORT || 9808;
 
@@ -17,6 +20,7 @@ app.listen(PORT,() => {
 })
 
 app.use('/api/v1/user',userRouter)
+app.use('/api/v1/worker',workerRouter)
 
 
 // global page not found

@@ -8,15 +8,17 @@ dotenv.config();
 const JWTSECRETKEY = process.env.JWT_SECRETKEY || ''
 
 export const registerUser = async (req,res,next) => {
-    const {name,email,password} = req.body;
+    const {firstname,email,password} = req.body;
+    console.log(firstname,email,password);
+    if(!firstname || !email || !password) return next(new CustomError("All the fields are required",402))
     try {
         const userExistBefore = await userModel.findOne({email})
-        if(userExistBefore) return next(new CustomError("User exist with that email",402))
+        if(userExistBefore) return next(new CustomError("User exist with that email",403))
 
         const hashPassword = bcryptjs.hashSync(password,12)
 
         const newUser = userModel({
-            name,
+            name:firstname,
             email,
             password: hashPassword
         })
@@ -30,12 +32,14 @@ export const registerUser = async (req,res,next) => {
 
 export const loginUser = async (req,res,next) => {
     const {email,password} = req.body;
+    console.log(email,password);
     try {
         const isUserExist = await userModel.findOne({email})
         if(!isUserExist) return next(new CustomError("Invalid Email or Password",401))
 
         const isPasswordCorrect = bcryptjs.compareSync(password,isUserExist.password)
-        if(isPasswordCorrect) return next(new CustomError("Invalid Password or Email" ,403))
+        console.log(isPasswordCorrect);
+        if(!isPasswordCorrect) return next(new CustomError("Invalid Password or Email" ,403))
 
         const token = jwt.sign({_id: isUserExist._id}, JWTSECRETKEY,{
             expiresIn:'1d'

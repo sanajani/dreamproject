@@ -1,42 +1,87 @@
-import { data } from '../../utils/mock_data'
+// import { data } from '../../utils/mock_data'
 import {flexRender,getCoreRowModel,useReactTable} from '@tanstack/react-table'
 import { columns } from '../../utils/tanstacktable/columnHelper'
+import { api } from '../../utils/api'
+import { useEffect, useState, useCallback } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
+import {useDispatch, useSelector} from 'react-redux'
+import { showLoading, hideLoading } from '../../redux/features/loadingSlice'
 
 // HomePageTable Component
 const HomePageTable = () => {
-    const table = useReactTable({
-        data,
-        columns,
-        getCoreRowModel: getCoreRowModel()
-    })
+  const {loading} = useSelector((state) => state.loading)
+  const dispatch = useDispatch()
+  const [searchParams,setSearchParams] = useSearchParams()
+  const pageParams = searchParams.get("page")
+
+  const [data,setData] = useState([])
+  const [pagination,setPagination] = useState({
+    pageIndex:0,
+    pageSize: 5
+  })
+  const getAllUsersData = useCallback(async () => {
+    try {
+      dispatch(showLoading())
+      const response = await api.get(`/api/v1/worker?page=${pageParams}`)
+      dispatch(hideLoading())
+      setData(response?.data?.data)
+    } catch (error) {
+      console.log(error);
+      dispatch(hideLoading())
+    }
+
+  },[pageParams,dispatch])
+
+  const table = useReactTable({
+    data,
+    columns,
+    state:{
+      pagination
+    },
+    pageCount:data?.totalPages,
+    manualPagination:true,
+    onPaginationChange:setPagination,
+    getCoreRowModel: getCoreRowModel(),
+  })
+
+  useEffect(() => {
+    setSearchParams({page: table.getState().pagination.pageIndex + 1})
+  },[setSearchParams,table,pagination])
+
+  useEffect(() => {
+    getAllUsersData();
+  },[getAllUsersData])
+  if(loading) return <h1>Loading...</h1>
   return (
     <div className='max-w-[1100px] mx-auto'>
       <div className='w-full overflow-auto overflow-x-scroll md:overflow-x-hidden px-4 max-h-fit '>
         <table className='min-w-[700px] md:w-full text-white bg-blue-500 p-6'>
-          <thead className="">
+          <thead className="text-right">
             {
                 table.getHeaderGroups().map(headerGroup => {
                    return <tr key={headerGroup?.id} className=''>
                         {
                             headerGroup.headers.map((header) => {
-                               return <td className='font-semibold md:font-bold sm:text-base md:textxl p-4 text-base border-2' key={header?.id}>{flexRender(header.column.columnDef.header, header.getContext())}</td>
+                               return <td className='font-semibold md:font-bold sm:text-lg md:text-2xl p-4 text-base border-2' key={header?.id}>{flexRender(header.column.columnDef.header, header.getContext())}</td>
                             })
                         }
                     </tr>
                 })
             }
           </thead>
-          <tbody>
+          <tbody className='text-right'>
             {
                 table.getRowModel().rows.map((row,index) => {
                     return <tr key={row?.id} 
                     className={`
-                    ${index % 2 === 0 ? "bg-blue-800" : "bg-blue-900"} text-white min-w-full my-1 border
+                    ${index % 2 === 0 ? "bg-blue-800" : "bg-blue-900"} text-white min-w-full my-1 border md:text-2xl sm:text-lg text-base
                     `}
                     >
                         {
                             row.getVisibleCells().map(cell => {
-                              return  <td key={cell?.id} className='p-4'>{flexRender(cell.column.columnDef.cell, cell.getContext())}</td>
+                              return  <td key={cell?.id} className='p-4'>
+                                {console.log(cell)}
+                                {cell.column.id === 'email' ? <Link to={`/profile/?email=${cell.getValue(cell.id)}`}>{flexRender(cell.column.columnDef.cell, cell.getContext())} </Link> : flexRender(cell.column.columnDef.cell, cell.getContext())} </td>
                             })
                         }
                     </tr>
